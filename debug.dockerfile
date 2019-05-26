@@ -4,4 +4,5 @@ RUN apk -U add \
         busybox-extras \
         curl \
         wget \
-        tcpdump
+        tcpdump \
+        bind-tools
