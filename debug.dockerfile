@@ -32,14 +32,9 @@ RUN sed -i'' 's;/bin/ash;/usr/bin/fish;g' /etc/passwd
 # fake it
 RUN touch /bin/chsh && chmod +x /bin/chsh
 
-RUN curl -sfL https://get.oh-my.fish | fish
 RUN cd ~/.dotfiles && \
 	./script/bootstrap.fish
-
-# not available on alpine
-RUN omf rm grc
 
 # TODO
 # RUN wget -O /usr/bin/hey https://storage.googleapis.com/jblabs/dist/hey_linux_v0.1.2 && \
 # 	chmod +x /usr/bin/hey
-
