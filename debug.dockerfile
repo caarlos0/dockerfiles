@@ -13,10 +13,18 @@ RUN apk -U add \
 	fish \
 	util-linux \
 	ripgrep \
+	redis \
 	fd
 
-RUN wget -O /usr/bin/httpstat https://github.com/davecheney/httpstat/releases/download/v1.0.0/httpstat-linux-amd64-v1.0.0 && \
-	chmod +x /usr/bin/httpstat
+RUN wget -O /usr/local/bin/httpstat https://github.com/davecheney/httpstat/releases/download/v1.0.0/httpstat-linux-amd64-v1.0.0 && \
+	chmod +x /usr/local/bin/httpstat
+
+RUN wget -O /usr/local/bin/hey https://hey-release.s3.us-east-2.amazonaws.com/hey_linux_amd64 && \
+	chmod +x /usr/local/bin/hey
+
+RUN wget -O /tmp/starship.tar.gz https://github.com/starship/starship/releases/download/v0.51.0/starship-x86_64-unknown-linux-musl.tar.gz && \
+	tar xvzf /tmp/starship.tar.gz -C /usr/local/bin && \
+	rm -rf /tmp/starship.tar.gz
 
 RUN echo "Set disable_coredump false" | tee -a /etc/sudo.conf
 
@@ -32,9 +40,4 @@ RUN sed -i'' 's;/bin/ash;/usr/bin/fish;g' /etc/passwd
 # fake it
 RUN touch /bin/chsh && chmod +x /bin/chsh
 
-RUN cd ~/.dotfiles && \
-	./script/bootstrap.fish
-
-# TODO
-# RUN wget -O /usr/bin/hey https://storage.googleapis.com/jblabs/dist/hey_linux_v0.1.2 && \
-# 	chmod +x /usr/bin/hey
+RUN cd ~/.dotfiles && ./script/bootstrap.fish
